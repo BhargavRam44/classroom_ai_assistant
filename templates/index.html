@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>AI Learning Assistant</h1>
+            </div>
+            <p class="tagline">Your interactive classroom companion</p>
+        </header>
+
+        <main class="app-main">
+            <div class="interaction-panel">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="text">
+                        <i class="fas fa-keyboard"></i> Text
+                    </button>
+                    <button class="tab-btn" data-tab="voice">
+                        <i class="fas fa-microphone"></i> Voice
+                    </button>
+                    <button class="tab-btn" data-tab="visual">
+                        <i class="fas fa-camera"></i> Visual
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="text-tab">
+                    <div class="input-container">
+                        <textarea id="text-input" placeholder="Ask me anything about your studies..."></textarea>
+                        <button id="text-submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="suggestions">
+                        <p>Try asking:</p>
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip">Explain photosynthesis</button>
+                            <button class="suggestion-chip">How do I solve quadratic equations?</button>
+                            <button class="suggestion-chip">What is the water cycle?</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="voice-tab">
+                    <div class="voice-container">
+                        <div class="voice-visualization">
+                            <div class="voice-waves">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                        <p id="voice-status">Click the microphone to start speaking</p>
+                        <button id="voice-toggle" class="voice-btn">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <p id="voice-transcript" class="voice-transcript"></p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="visual-tab">
+                    <div class="visual-container">
+                        <div class="camera-container">
+                            <video id="camera-feed" autoplay muted></video>
+                            <canvas id="camera-canvas" style="display:none;"></canvas>
+                            <div id="image-preview" class="image-preview"></div>
+                        </div>
+                        <div class="camera-controls">
+                            <button id="camera-toggle" class="camera-btn">
+                                <i class="fas fa-camera"></i> Start Camera
+                            </button>
+                            <button id="capture-image" class="camera-btn" disabled>
+                                <i class="fas fa-camera-retro"></i> Capture
+                            </button>
+                            <button id="upload-image" class="camera-btn">
+                                <i class="fas fa-upload"></i> Upload
+                            </button>
+                            <input type="file" id="image-upload" accept="image/*" style="display:none;">
+                        </div>
+                        <div class="visual-query">
+                            <input type="text" id="visual-query-input" placeholder="Ask about this image...">
+                            <button id="visual-submit" class="submit-btn" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conversation-panel">
+                <div class="conversation-header">
+                    <h2>Conversation</h2>
+                    <button id="clear-conversation" class="clear-btn">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+                <div id="conversation-container" class="conversation-container">
+                    <div class="message assistant">
+                        <div class="message-content">
+                            <p>Hello! I'm your AI learning assistant. How can I help you with your studies today?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="engagement-panel">
+                <div class="engagement-header">
+                    <h2>Engagement Monitor</h2>
+                    <div class="engagement-status">
+                        <span id="status-indicator" class="status-indicator"></span>
+                        <span id="status-text">Not monitoring</span>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <label>Engagement</label>
+                        <div class="progress-bar">
+                            <div id="engagement-bar" class="progress" style="width: 0%"></div>
+                        </div>
+                        <span id="engagement-value">0%</span>
+                    </div>
+                    <div class="metric">
+                        <label>Attention</label>
+                        <div class="progress-bar">
+                            <div id="attention-bar" class="progress" style="width: 0%"></div>
+                        </div>
+                        <span id="attention-value">0%</span>
+                    </div>
+                    <div class="metric">
+                        <label>Confusion</label>
+                        <div class="progress-bar">
+                            <div id="confusion-bar" class="progress" style="width: 0%"></div>
+                        </div>
+                        <span id="confusion-value">0%</span>
+                    </div>
+                </div>
+                <div class="recommendation">
+                    <h3>Teaching Recommendation</h3>
+                    <p id="recommendation-text">Start monitoring to receive recommendations.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>AI-Powered Interactive Learning Assistant &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/text-module.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice-module.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/visual-module.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/engagement.js') }}"></script>
+</body>
+</html>
